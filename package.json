@@ -1,5 +1,5 @@
 {
-  "name": "hardhat-project",
+  "name": "pegasys-incentives",
   "scripts": {
     "run-env": "npm i && tail -f /dev/null",
     "hardhat": "hardhat",
