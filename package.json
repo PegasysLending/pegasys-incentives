@@ -1,5 +1,12 @@
 {
   "name": "hardhat-project",
+  "scripts": {
+    "test": "npm run test-pull-rewards-incentives && npm run test-staked-incentives",
+    "test-pull-rewards-incentives": "TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test/__setup.spec.ts ./test/PullRewardsIncentivesController/*.spec.ts",
+    "test-staked-incentives": "TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test/__setup.spec.ts ./test/StakedIncentivesController/*.spec.ts",
+    "test-proposal": "TS_NODE_TRANSPILE_ONLY=1 MAINNET_FORK=true hardhat test ./test-fork/incentivesProposal.spec.ts",
+    "test-proposal-skip": "TS_NODE_TRANSPILE_ONLY=1 MAINNET_FORK=true hardhat test ./test-fork/incentives-skip.spec.ts"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "hardhat": "^2.19.4"
@@ -7,6 +14,15 @@
   "dependencies": {
     "@aave/aave-stake": "^1.0.4",
     "@aave/governance-v2": "^1.0.0",
-    "@aave/protocol-v2": "^1.0.1"
+    "@aave/protocol-v2": "^1.0.1",
+    "@types/lowdb": "^1.0.15",
+    "bignumber.js": "^9.1.2",
+    "chai-bignumber": "^3.1.0",
+    "defender-relay-client": "^1.44.0",
+    "dotenv": "^16.4.1",
+    "eth-sig-util": "^3.0.1",
+    "ethers": "^5.7.2",
+    "kebab-case": "^1.0.2",
+    "lowdb": "^1.0.0"
   }
 }
