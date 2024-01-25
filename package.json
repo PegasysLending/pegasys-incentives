@@ -1,0 +1,12 @@
+{
+  "name": "hardhat-project",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "hardhat": "^2.19.4"
+  },
+  "dependencies": {
+    "@aave/aave-stake": "^1.0.4",
+    "@aave/governance-v2": "^1.0.0",
+    "@aave/protocol-v2": "^1.0.1"
+  }
+}
