@@ -1,11 +1,14 @@
 {
   "name": "hardhat-project",
   "scripts": {
+    "run-env": "npm i && tail -f /dev/null",
+    "hardhat": "hardhat",
     "test": "npm run test-pull-rewards-incentives && npm run test-staked-incentives",
     "test-pull-rewards-incentives": "TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test/__setup.spec.ts ./test/PullRewardsIncentivesController/*.spec.ts",
     "test-staked-incentives": "TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test/__setup.spec.ts ./test/StakedIncentivesController/*.spec.ts",
     "test-proposal": "TS_NODE_TRANSPILE_ONLY=1 MAINNET_FORK=true hardhat test ./test-fork/incentivesProposal.spec.ts",
-    "test-proposal-skip": "TS_NODE_TRANSPILE_ONLY=1 MAINNET_FORK=true hardhat test ./test-fork/incentives-skip.spec.ts"
+    "test-proposal-skip": "TS_NODE_TRANSPILE_ONLY=1 MAINNET_FORK=true hardhat test ./test-fork/incentives-skip.spec.ts",
+    "compile": "SKIP_LOAD=true hardhat compile"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
