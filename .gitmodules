@@ -1,0 +1,3 @@
+[submodule "Incentive"]
+	path = Incentive
+	url = https://github.com/PegasysLending/Incentive.git

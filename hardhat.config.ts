@@ -26,6 +26,9 @@ if (!SKIP_LOAD) {
 require(`${path.join(__dirname, 'tasks/misc')}/set-DRE.ts`);
 
 const config: HardhatUserConfig = {
+  paths: {
+    sources: './Incentive/contracts'
+  },
   defaultNetwork: "hardhat",
   solidity: {
     compilers: [
