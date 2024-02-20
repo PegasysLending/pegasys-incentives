@@ -12,9 +12,9 @@ import { ATokenMock, MintableErc20, PullRewardsIncentivesController, StakedAaveV
 
 chai.use(bignumberChai());
 
-export let stakedAaveInitializeTimestamp = 0;
-export const setStakedAaveInitializeTimestamp = (timestamp: number) => {
-  stakedAaveInitializeTimestamp = timestamp;
+export let stakedPegasysInitializeTimestamp = 0;
+export const setStakedPegasysInitializeTimestamp = (timestamp: number) => {
+  stakedPegasysInitializeTimestamp = timestamp;
 };
 
 export interface SignerWithAddress {
@@ -28,7 +28,7 @@ export interface TestEnv {
   aaveToken: MintableErc20;
   aaveIncentivesController: StakedTokenIncentivesController;
   pullRewardsIncentivesController: PullRewardsIncentivesController;
-  stakedAave: StakedAaveV3;
+  stakedPegasys: StakedAaveV3;
   aDaiMock: ATokenMock;
   aWethMock: ATokenMock;
   aDaiBaseMock: ATokenMock;
@@ -46,7 +46,7 @@ const testEnv: TestEnv = {
   deployer: {} as SignerWithAddress,
   users: [] as SignerWithAddress[],
   aaveToken: {} as MintableErc20,
-  stakedAave: {} as StakedAaveV3,
+  stakedPegasys: {} as StakedAaveV3,
   aaveIncentivesController: {} as StakedTokenIncentivesController,
   pullRewardsIncentivesController: {} as PullRewardsIncentivesController,
   aDaiMock: {} as ATokenMock,
@@ -57,7 +57,7 @@ const testEnv: TestEnv = {
 
 export async function initializeMakeSuite(
   aaveToken: MintableErc20,
-  stakedAave: StakedAaveV3,
+  stakedPegasys: StakedAaveV3,
   aaveIncentivesController: StakedTokenIncentivesController,
   pullRewardsIncentivesController: PullRewardsIncentivesController
 ) {
@@ -80,7 +80,7 @@ export async function initializeMakeSuite(
   }
   testEnv.deployer = deployer;
   testEnv.rewardsVault = rewardsVault;
-  testEnv.stakedAave = stakedAave;
+  testEnv.stakedPegasys = stakedPegasys;
   testEnv.aaveIncentivesController = aaveIncentivesController;
   testEnv.pullRewardsIncentivesController = pullRewardsIncentivesController;
   testEnv.aaveToken = aaveToken;

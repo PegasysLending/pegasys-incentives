@@ -4,7 +4,7 @@ import { advanceBlockTo, DRE, increaseTime, latestBlock } from '../../helpers/mi
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { Signer } from '@ethersproject/abstract-signer';
 import { logError } from '../../helpers/tenderly-utils';
-import { IAaveGovernanceV2, IERC20__factory, IGovernancePowerDelegationToken__factory } from '../../typechain-types';
+import { IPegasysGovernanceV2, IERC20__factory, IGovernancePowerDelegationToken__factory } from '../../typechain-types';
 
 const {
   AAVE_TOKEN = '0x9C716BA14d87c53041bB7fF95C977d5a382E71F7',
@@ -15,7 +15,7 @@ const VOTING_DURATION = 19200;
 
 const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
-task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to Aave Governance')
+task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to Pegasys Governance')
   .addParam('proposalExecutionPayload')
   .addParam('aTokens')
   .addParam('variableDebtTokens')
@@ -53,10 +53,10 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
 
       // Initialize contracts and tokens
       const gov = (await DRE.ethers.getContractAt(
-        'IAaveGovernanceV2',
+        'IPegasysGovernanceV2',
         AAVE_GOVERNANCE_V2,
         proposer
-      )) as IAaveGovernanceV2;
+      )) as IPegasysGovernanceV2;
 
       // Balance and proposal power check
       const balance = await aave.balanceOf(proposerAddress);

@@ -28,7 +28,7 @@ const getRewardsBalanceScenarios: ScenarioAction[] = [
   },
 ];
 
-makeSuite('AaveIncentivesController getRewardsBalance tests', (testEnv) => {
+makeSuite('PegasysIncentivesController getRewardsBalance tests', (testEnv) => {
   for (const { caseName, emissionPerSecond } of getRewardsBalanceScenarios) {
     it(caseName, async () => {
       await increaseTime(100);

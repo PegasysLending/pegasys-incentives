@@ -7,7 +7,7 @@ import { task } from 'hardhat/config';
 import { DRE, advanceBlockTo, latestBlock, increaseTime } from '../../helpers/misc-utils';
 import { tEthereumAddress } from '../../helpers/types';
 import { getReserveConfigs } from '../../test-fork/helpers';
-import { IAaveGovernanceV2, IERC20Detailed__factory, IERC20__factory, IGovernancePowerDelegationToken__factory, ILendingPool, ProposalIncentivesExecutor__factory, SelfdestructTransfer__factory } from '../../typechain-types';
+import { IPegasysGovernanceV2, IERC20Detailed__factory, IERC20__factory, IGovernancePowerDelegationToken__factory, ILendingPool, ProposalIncentivesExecutor__factory, SelfdestructTransfer__factory } from '../../typechain-types';
 
 
 const {
@@ -54,7 +54,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     let proposer: SignerWithAddress;
     let incentivesProxyAdmin: SignerWithAddress;
     let incentivesProxy: tEthereumAddress;
-    let gov: IAaveGovernanceV2;
+    let gov: IPegasysGovernanceV2;
     let pool: ILendingPool;
     let proposalId: BigNumber;
     let aTokensImpl: tEthereumAddress[];
@@ -109,10 +109,10 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
-      'IAaveGovernanceV2',
+      'IPegasysGovernanceV2',
       AAVE_GOVERNANCE_V2,
       proposer
-    )) as IAaveGovernanceV2;
+    )) as IPegasysGovernanceV2;
     pool = (await ethers.getContractAt(
       'ILendingPool',
       AAVE_LENDING_POOL,

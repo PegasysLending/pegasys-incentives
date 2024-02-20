@@ -7,7 +7,7 @@ import { tEthereumAddress } from '../../helpers/types';
 import { logError } from '../../helpers/tenderly-utils';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { Signer } from 'ethers';
-import { IAaveGovernanceV2 } from '../../typechain-types';
+import { IPegasysGovernanceV2 } from '../../typechain-types';
 
 const {
   AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
@@ -26,7 +26,7 @@ task('execute-proposal:tenderly', 'Spin a tenderly fork with incentives activate
     let ethers;
     let whale: JsonRpcSigner;
     let proposer: Signer;
-    let gov: IAaveGovernanceV2;
+    let gov: IPegasysGovernanceV2;
 
     await localBRE.run('set-DRE');
 
@@ -48,10 +48,10 @@ task('execute-proposal:tenderly', 'Spin a tenderly fork with incentives activate
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
-      'IAaveGovernanceV2',
+      'IPegasysGovernanceV2',
       AAVE_GOVERNANCE_V2,
       whale
-    )) as IAaveGovernanceV2;
+    )) as IPegasysGovernanceV2;
 
     // Mine block due flash loan voting protection
     await advanceBlockTo((await latestBlock()) + 100);

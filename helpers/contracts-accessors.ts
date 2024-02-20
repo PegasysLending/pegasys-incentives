@@ -21,7 +21,7 @@ from '../typechain-types'
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
 
-export const deployAaveIncentivesController = async (
+export const deployPegasysIncentivesController = async (
   [aavePsm, emissionManager]: [tEthereumAddress, tEthereumAddress],
   verify?: boolean,
   signer?: Signer | DefenderRelaySigner
@@ -75,7 +75,7 @@ export const deployATokenMock = async (aicAddress: tEthereumAddress, slug: strin
 
 export const getMintableErc20 = getContractFactory<MintableErc20>(eContractid.MintableErc20);
 
-export const getAaveIncentivesController = getContractFactory<StakedTokenIncentivesController>(
+export const getPegasysIncentivesController = getContractFactory<StakedTokenIncentivesController>(
   eContractid.StakedTokenIncentivesController
 );
 

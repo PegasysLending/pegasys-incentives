@@ -3,15 +3,15 @@ import { timeLatest, waitForTx } from '../../helpers/misc-utils';
 import { expect } from 'chai';
 
 import { makeSuite } from '../helpers/make-suite';
-import { deployAaveIncentivesController } from '../../helpers/contracts-accessors';
+import { deployPegasysIncentivesController } from '../../helpers/contracts-accessors';
 import { MAX_UINT_AMOUNT, RANDOM_ADDRESSES, ZERO_ADDRESS } from '../../helpers/constants';
 
-makeSuite('AaveIncentivesController misc tests', (testEnv) => {
+makeSuite('PegasysIncentivesController misc tests', (testEnv) => {
   it('constructor should assign correct params', async () => {
     const peiEmissionManager = RANDOM_ADDRESSES[1];
     const psm = RANDOM_ADDRESSES[5];
 
-    const aaveIncentivesController = await deployAaveIncentivesController([
+    const aaveIncentivesController = await deployPegasysIncentivesController([
       psm,
       peiEmissionManager,
     ]);
@@ -56,12 +56,12 @@ makeSuite('AaveIncentivesController misc tests', (testEnv) => {
   });
 
   it('Should REWARD_TOKEN getter returns the stake token address to keep old interface compatibility', async () => {
-    const { aaveIncentivesController, stakedAave } = testEnv;
-    await expect(await aaveIncentivesController.REWARD_TOKEN()).to.be.equal(stakedAave.address);
+    const { aaveIncentivesController, stakedPegasys } = testEnv;
+    await expect(await aaveIncentivesController.REWARD_TOKEN()).to.be.equal(stakedPegasys.address);
   });
 
   it('Should claimRewards revert if to argument is ZERO_ADDRESS', async () => {
-    const { aaveIncentivesController, users, aDaiMock, stakedAave } = testEnv;
+    const { aaveIncentivesController, users, aDaiMock, stakedPegasys } = testEnv;
     const [userWithRewards] = users;
 
     await waitForTx(await aaveIncentivesController.configureAssets([aDaiMock.address], ['2000']));

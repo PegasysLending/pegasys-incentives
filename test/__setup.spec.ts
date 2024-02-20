@@ -11,7 +11,7 @@ import { hrtime } from 'process';
 import { MAX_UINT_AMOUNT } from '../helpers/constants';
 import { MintableErc20, PullRewardsIncentivesController__factory, StakedAaveV3__factory, StakedTokenIncentivesController__factory } from '../typechain-types';
 
-const topUpWalletsWithAave = async (
+const topUpWalletsWithPegasys = async (
   wallets: Signer[],
   aaveToken: MintableErc20,
   amount: string
@@ -29,10 +29,10 @@ const buildTestEnv = async (
 ) => {
   console.time('setup');
 
-  const aaveToken = await deployMintableErc20(['Aave', 'aave']);
+  const aaveToken = await deployMintableErc20(['Pegasys', 'aave']);
 
   await waitForTx(await aaveToken.connect(vaultOfRewards).mint(ethers.utils.parseEther('2000000')));
-  await topUpWalletsWithAave(
+  await topUpWalletsWithPegasys(
     [restWallets[0], restWallets[1], restWallets[2], restWallets[3], restWallets[4]],
     aaveToken,
     ethers.utils.parseEther('100').toString()

@@ -17,7 +17,7 @@ import { tEthereumAddress } from '../helpers/types';
 import { getRewards } from '../test/DistributionManager/data-helpers/base-math';
 import { getUserIndex } from '../test/DistributionManager/data-helpers/asset-user-data';
 import { fullCycleLendingPool, getReserveConfigs, spendList } from './helpers';
-import { deployAaveIncentivesController } from '../helpers/contracts-accessors';
+import { deployPegasysIncentivesController } from '../helpers/contracts-accessors';
 import { logError } from '../helpers/tenderly-utils';
 import { AToken, AToken__factory, IAToken__factory, IAaveGovernanceV2, IERC20, IERC20Detailed__factory, IERC20__factory, IGovernancePowerDelegationToken__factory, ILendingPool, ProposalIncentivesExecutor__factory, SelfdestructTransfer__factory, StakedTokenIncentivesController__factory } from '../typechain-types';
 
@@ -69,7 +69,7 @@ describe('Enable incentives in target assets', () => {
   let gov: IAaveGovernanceV2;
   let pool: ILendingPool;
   let aave: IERC20;
-  let stkAave: IERC20;
+  let stkPegasys: IERC20;
   let dai: IERC20;
   let aDAI: AToken;
   let variableDebtDAI: IERC20;
@@ -90,7 +90,7 @@ describe('Enable incentives in target assets', () => {
     [proposer, incentivesProxyAdmin] = await DRE.ethers.getSigners();
 
     // Deploy incentives implementation
-    const { address: incentivesImplementation } = await deployAaveIncentivesController([
+    const { address: incentivesImplementation } = await deployPegasysIncentivesController([
       AAVE_STAKE,
       AAVE_SHORT_EXECUTOR,
     ]);
@@ -131,7 +131,7 @@ describe('Enable incentives in target assets', () => {
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
-      'IAaveGovernanceV2',
+      'IPegasysGovernanceV2',
       AAVE_GOVERNANCE_V2,
       proposer
     )) as IAaveGovernanceV2;
@@ -148,7 +148,7 @@ describe('Enable incentives in target assets', () => {
     } = await pool.getReserveData(DAI_TOKEN);
 
     aave = IERC20__factory.connect(AAVE_TOKEN, whale);
-    stkAave = IERC20__factory.connect(AAVE_STAKE, proposer);
+    stkPegasys = IERC20__factory.connect(AAVE_STAKE, proposer);
     dai = IERC20__factory.connect(DAI_TOKEN, daiHolder);
     aDAI = AToken__factory.connect(aTokenAddress, proposer);
     variableDebtDAI = IERC20__factory.connect(variableDebtTokenAddress, proposer);
@@ -275,7 +275,7 @@ describe('Enable incentives in target assets', () => {
     const atokenBalance = await IAToken__factory.connect(aTokenAddress, proposer).scaledBalanceOf(
       proposer.address
     );
-    const priorStkBalance = await IERC20__factory.connect(stkAave.address, proposer).balanceOf(
+    const priorStkBalance = await IERC20__factory.connect(stkPegasys.address, proposer).balanceOf(
       proposer.address
     );
     const userIndexBefore = await getUserIndex(incentives, proposer.address, aTokenAddress);
@@ -286,7 +286,7 @@ describe('Enable incentives in target assets', () => {
       .claimRewards([aTokenAddress], MAX_UINT_AMOUNT, proposer.address);
 
     expect(tx2).to.emit(incentives, 'RewardsClaimed');
-    const afterStkBalance = await stkAave.balanceOf(proposer.address);
+    const afterStkBalance = await stkPegasys.balanceOf(proposer.address);
     const claimed = afterStkBalance.sub(priorStkBalance);
 
     const userIndexAfter = await getUserIndex(incentives, proposer.address, aTokenAddress);
@@ -411,14 +411,14 @@ describe('Enable incentives in target assets', () => {
 
       await increaseTime(86400);
 
-      const priorBalance = await stkAave.balanceOf(proposer.address);
+      const priorBalance = await stkPegasys.balanceOf(proposer.address);
       const tx = await incentives
         .connect(proposer)
         .claimRewards([aTokenAddress, variableDebtTokenAddress], MAX_UINT_AMOUNT, proposer.address);
       await tx.wait();
       expect(tx).to.emit(incentives, 'RewardsClaimed');
 
-      const afterBalance = await stkAave.balanceOf(proposer.address);
+      const afterBalance = await stkPegasys.balanceOf(proposer.address);
       expect(afterBalance).to.be.gt(priorBalance);
     }
   });

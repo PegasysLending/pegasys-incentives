@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { DefenderRelaySigner, DefenderRelayProvider } from 'defender-relay-client/lib/ethers';
-import { deployAaveIncentivesController } from '../../helpers/contracts-accessors';
+import { deployPegasysIncentivesController } from '../../helpers/contracts-accessors';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 
 // Mainnet addresses
@@ -15,7 +15,7 @@ task('deploy-incentives-impl', 'Incentives controller implementation deployment'
     const { signer } = await getDefenderRelaySigner();
     const deployer = signer;
 
-    const incentives = await deployAaveIncentivesController(
+    const incentives = await deployPegasysIncentivesController(
       [AAVE_STAKE, AAVE_SHORT_EXECUTOR],
       true,
       deployer

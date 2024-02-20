@@ -119,7 +119,7 @@ const configureAssetScenarios: ScenarioAction[] = [
   },
 ];
 
-makeSuite('AaveIncentivesController configureAssets', (testEnv: TestEnv) => {
+makeSuite('PegasysIncentivesController configureAssets', (testEnv: TestEnv) => {
   let deployedAssets: ATokenMock[];
 
   before(async () => {

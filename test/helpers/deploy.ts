@@ -1,7 +1,7 @@
 import { Signer } from 'ethers';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
-  deployAaveIncentivesController,
+  deployPegasysIncentivesController,
   deployInitializableAdminUpgradeabilityProxy,
 } from '../../helpers/contracts-accessors';
 import { getFirstSigner, insertContractAddressInDb } from '../../helpers/contracts-helpers';
@@ -23,7 +23,7 @@ export const testDeployIncentivesController = async (
   const stakeProxy = await deployInitializableAdminUpgradeabilityProxy();
   const incentivesProxy = await deployInitializableAdminUpgradeabilityProxy();
 
-  const aaveStakeV3 = await deployStakedAaveV3([
+  const aaveStakeV3 = await deployStakedPegasysV3([
     aaveToken.address,
     aaveToken.address,
     COOLDOWN_SECONDS,
@@ -33,7 +33,7 @@ export const testDeployIncentivesController = async (
     (1000 * 60 * 60).toString(),
   ]);
 
-  const incentivesImplementation = await deployAaveIncentivesController([
+  const incentivesImplementation = await deployPegasysIncentivesController([
     stakeProxy.address,
     emissionManagerAddress,
   ]);
@@ -69,12 +69,12 @@ export const testDeployIncentivesController = async (
     )
   ).wait();
 
-  await insertContractAddressInDb(eContractid.AaveIncentivesController, incentivesProxy.address);
+  await insertContractAddressInDb(eContractid.PegasysIncentivesController, incentivesProxy.address);
 
   return { incentivesProxy, stakeProxy };
 };
 
-export const deployStakedAaveV3 = async (
+export const deployStakedPegasysV3 = async (
   [
     stakedToken,
     rewardsToken,
@@ -94,7 +94,7 @@ export const deployStakedAaveV3 = async (
   ],
   verify?: boolean
 ) => {
-  const id = eContractid.StakedAaveV3;
+  const id = eContractid.StakedPegasysV3;
   const args: string[] = [
     stakedToken,
     rewardsToken,

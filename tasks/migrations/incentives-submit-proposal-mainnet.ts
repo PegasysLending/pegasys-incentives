@@ -3,7 +3,7 @@ import { task } from 'hardhat/config';
 import { DRE, impersonateAccountsHardhat, latestBlock } from '../../helpers/misc-utils';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { Signer } from '@ethersproject/abstract-signer';
-import { IAaveGovernanceV2, IERC20__factory, IGovernancePowerDelegationToken__factory } from '../../typechain-types';
+import { IPegasysGovernanceV2, IERC20__factory, IGovernancePowerDelegationToken__factory } from '../../typechain-types';
 
 const {
   AAVE_TOKEN = '0x9C716BA14d87c53041bB7fF95C977d5a382E71F7',
@@ -11,7 +11,7 @@ const {
   AAVE_SHORT_EXECUTOR = '0x3162c8729602EF828C3608459bF178FaA93B0d0e', // mainnet
 } = process.env;
 
-task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aave Governance')
+task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Pegasys Governance')
   .addParam('proposalExecutionPayload')
   .addParam('aTokens')
   .addParam('variableDebtTokens')
@@ -45,10 +45,10 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aa
 
       // Initialize contracts and tokens
       const gov = (await DRE.ethers.getContractAt(
-        'IAaveGovernanceV2',
+        'IPegasysGovernanceV2',
         AAVE_GOVERNANCE_V2,
         proposer
-      )) as IAaveGovernanceV2;
+      )) as IPegasysGovernanceV2;
 
       const aave = IERC20__factory.connect(AAVE_TOKEN, proposer);
 

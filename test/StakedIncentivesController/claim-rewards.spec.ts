@@ -60,7 +60,7 @@ const getRewardsBalanceScenarios: ScenarioAction[] = [
   },
 ];
 
-makeSuite('AaveIncentivesController claimRewards tests', (testEnv) => {
+makeSuite('PegasysIncentivesController claimRewards tests', (testEnv) => {
   for (const {
     caseName,
     amountToClaim: _amountToClaim,
@@ -70,7 +70,7 @@ makeSuite('AaveIncentivesController claimRewards tests', (testEnv) => {
     let amountToClaim = _amountToClaim;
     it(caseName, async () => {
       await increaseTime(100);
-      const { aaveIncentivesController, stakedAave, aDaiMock } = testEnv;
+      const { aaveIncentivesController, stakedPegasys, aDaiMock } = testEnv;
 
       const distributionEndTimestamp = await aaveIncentivesController.getDistributionEnd();
       const userAddress = await aaveIncentivesController.signer.getAddress();
@@ -86,7 +86,7 @@ makeSuite('AaveIncentivesController claimRewards tests', (testEnv) => {
 
       const destinationAddress = to || userAddress;
 
-      const destinationAddressBalanceBefore = await stakedAave.balanceOf(destinationAddress);
+      const destinationAddressBalanceBefore = await stakedPegasys.balanceOf(destinationAddress);
       await aDaiMock.setUserBalanceAndSupply(stakedByUser, totalStaked);
       await aDaiMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
 
@@ -124,7 +124,7 @@ makeSuite('AaveIncentivesController claimRewards tests', (testEnv) => {
         userAddress
       );
 
-      const destinationAddressBalanceAfter = await stakedAave.balanceOf(destinationAddress);
+      const destinationAddressBalanceAfter = await stakedPegasys.balanceOf(destinationAddress);
 
       const claimedAmount = destinationAddressBalanceAfter.sub(destinationAddressBalanceBefore);
 

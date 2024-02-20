@@ -1,5 +1,5 @@
 import { task } from 'hardhat/config';
-import { AaveProtocolDataProvider__factory, IERC20Detailed__factory, ILendingPool, ILendingPoolAddressesProvider__factory } from '../../typechain-types';
+import { PegasysProtocolDataProvider__factory, IERC20Detailed__factory, ILendingPool, ILendingPoolAddressesProvider__factory } from '../../typechain-types';
 
 // import { verifyContract } from '../../helpers/etherscan-verification';
 
@@ -38,7 +38,7 @@ task('verify-proposal-etherscan', 'Verify proposals')
       POOL_PROVIDER,
       deployer
     );
-    const protocolDataProvider = await AaveProtocolDataProvider__factory.connect(
+    const protocolDataProvider = await PegasysProtocolDataProvider__factory.connect(
       await poolProvider.getAddress(
         '0x0100000000000000000000000000000000000000000000000000000000000000'
       ),
